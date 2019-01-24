@@ -8,8 +8,7 @@ export VERSION=$1
 
 source $PGRDIR/env.sh
 
-export DOCKER_OPTS="-p $DOCKER_INSTANCE_PORT:80 \
-"
+export DOCKER_OPTS="-p $DOCKER_INSTANCE_PORT:80 -p 443:443"
 
 # only set VERSION if not set
 [ -z "$VERSION" ] && VERSION=latest
@@ -20,5 +19,5 @@ docker rm -f $DOCKER_INSTANCE_NAME
 echo step2. Make release image
 docker build -t ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${VERSION} -f ${PGRDIR}/../Dockerfile ${WORKSPACE}
 
-echo step2. run $DOCKER_INSTANCE_NAME
+echo step3. run $DOCKER_INSTANCE_NAME
 docker run --name=$DOCKER_INSTANCE_NAME --hostname=$DOCKER_INSTANCE_NAME -d -v ${WORKSPACE}/certs:/etc/nginx/certs --restart=always $DOCKER_OPTS $DOCKER_REGISTRY_URL/$DOCKER_IMAGE_NAME:$VERSION

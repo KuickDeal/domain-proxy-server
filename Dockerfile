@@ -143,7 +143,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY domain.conf /etc/nginx/conf.d/domain.conf
 COPY nginx.vh.default.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+EXPOSE [80 443]
 
 STOPSIGNAL SIGTERM
 
